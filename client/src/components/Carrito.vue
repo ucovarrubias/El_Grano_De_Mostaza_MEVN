@@ -30,3 +30,28 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    name: "Carrito",
+    data() {
+        return {
+            carrito: [{
+                id: '',
+                nombre: '',
+                precio: '',
+                imagen: ''
+            }]
+        }
+    },
+    async created() {
+        if(localStorage.getItem('id') === null){
+            this.session = false
+            this.$router.replace({name: 'index'})
+        } else {
+            this.session = true
+        }
+        this.productos = await API.getCarrito(localStorage.getItem('id'))
+    }
+}
+</script>

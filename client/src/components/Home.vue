@@ -418,6 +418,12 @@ export default {
         }
     },
     async created() {
+        if(localStorage.getItem('id') === null){
+            this.session = false
+            this.$router.replace({name: 'index'})
+        } else {
+            this.session = true
+        }
         const id = localStorage.getItem('id')
         this.cliente = await API.getClientebyID(id)
     },
