@@ -27,12 +27,13 @@
 
 <script>
 import API from "../api"
+
 export default {
     name: "Productos",
     data() {
         return {
             productos: [{
-                id: '',
+                _id: '',
                 nombre: '',
                 precio: '',
                 imagen: ''
@@ -54,7 +55,7 @@ export default {
     methods: {
         async agregarCarrito(id, precio){
             const carrito = {
-                'id': id,
+                '_id': id,
                 'cantidad': 1,
                 'precio': precio
             }

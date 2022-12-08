@@ -110,4 +110,18 @@ module.exports = class API {
             res.status(400).json({message: err.message})
         }
     }
+
+    //Fetch a carrito
+    static async getCarrito(req, res) {
+        const idCliente = req.params.id
+        try {
+            const clienteCarrito = await Cliente.findById(idCliente).populate(
+                'carrito.producto'
+            )
+            console.log("controller api: " + clienteCarrito)
+            res.status(200).json(clienteCarrito.carrito)
+        } catch (err) {
+            res.status(404).json({message: err.message})
+        }
+    }
 }

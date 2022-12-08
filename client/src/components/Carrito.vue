@@ -3,16 +3,16 @@
         <div class="container" style="padding-top:100px;">
             <h2>Todos los productos del carrito</h2>
             <div class="row">
-                <div class="col-md-3 my-3">
+                <div class="col-md-3 my-3" v-for="c in carrito">
                     <div class="card w-100" style="width: 18rem;">
-                        <img class="card-img-top" src="<%= producto.getImagen() %>" alt="imagen">
+                        <img class="card-img-top" :src=c.imagen alt="imagen">
                         <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <h6>Precio: </h6>
+                            <h5 class="card-title">{{(c.nombre)}}</h5>
+                            <h6>Precio: {{c.precio}}</h6>
                             <form action="agregarCarrito?tarea=actualizarCarrito" method="POST">
                                 <input type="hidden" name="id" value="<%= c.getId() %>" />
                                 <div class="align-items-center d-flex justify-content-between">
-                                    Cantidad: <input type="text" pattern="[0-9]{1,2}" title="La cantidad no debe ser menor a 0" name="cantidad" class="form-control mx-1" value="<%= c.getCantidad()%>"/>
+                                    Cantidad: <input type="text" pattern="[0-9]{1,2}" title="La cantidad no debe ser menor a 0" name="cantidad" class="form-control mx-1" v-model="c.cantidad"/>
                                     <button type="submit" class="mx-1 btn btn-light btn-sm">Actualizar</button>
                                 </div>
                             </form>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import API from "../api"
+
 export default {
     name: "Carrito",
     data() {
@@ -40,6 +42,7 @@ export default {
                 id: '',
                 nombre: '',
                 precio: '',
+                cantidad: '',
                 imagen: ''
             }]
         }
@@ -51,7 +54,7 @@ export default {
         } else {
             this.session = true
         }
-        this.productos = await API.getCarrito(localStorage.getItem('id'))
+        this.carrito = await API.getCarrito(localStorage.getItem('id'))
     }
 }
 </script>

@@ -42,4 +42,9 @@ export default class API {
         const res = await axios.patch(urlClientes+'/carrito/'+id, carrito)
         return res.data
     }
+
+    static async getCarrito(id){
+        const res = await axios.get(urlClientes+'/carrito/'+id)
+        return res.data
+    }
 }
