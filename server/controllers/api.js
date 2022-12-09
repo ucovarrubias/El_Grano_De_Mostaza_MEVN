@@ -102,9 +102,7 @@ module.exports = class API {
         const idCliente = req.params.id
         const carrito = req.body
         try {
-            console.log(carrito._id)
             const result = await Cliente.findById(idCliente).find({ 'carrito.producto': { $in: { _id: carrito._id } } })
-            console.log(result)
             await Cliente.findByIdAndUpdate(idCliente, {$push: { carrito: carrito}})
             res.status(200).json({message: 'Cliente actualizó su carrito'})
 
@@ -118,11 +116,18 @@ module.exports = class API {
         const idCliente = req.params.id
         try {
             const clienteCarrito = await Cliente.findById(idCliente)
-            .populate({
-                path: 'carrito.producto',
-                model: 'producto'
-            })
+            /* Cliente.aggregate(
+                [
+                {$lookup: {
+                from: 'producto',
+                localField: 'carrito.producto',
+                foreignField: '_id',
+                as: 'producto'
+            }}]).exec((err, clienteCarrito) => {
+                console.log(clienteCarrito)
+            }) */
             res.status(200).json(clienteCarrito.carrito)
+            
         } catch (err) {
             res.status(404).json({message: err.message})
         }
@@ -131,10 +136,11 @@ module.exports = class API {
     //Delete item from carrito
     static async deleteItemCarrito(req, res){
         const idCliente = req.params.id
-        const productoId = req.body.id
+        const productoId = req.body._id
         console.log(productoId)
         try {
-            await Cliente.findByIdAndUpdate(idCliente, {$pop: {path: 'carrito.producto', productoId}})
+            await Cliente.findByIdAndUpdate(idCliente, {$pull: {carrito: {_id: productoId}}})
+            res.status(200).json({message: 'Se eliminó el producto'})
         } catch (err) {
             res.status(404).json({message: err.message})
         }

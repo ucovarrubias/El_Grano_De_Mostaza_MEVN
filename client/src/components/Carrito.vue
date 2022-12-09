@@ -24,8 +24,8 @@
             
             <hr>   
             <div>
-                <p>Subtotal: <strong></strong></p>
-                <button type="button" onclick="document.location='pedido.jsp'" class="btn btn-primary btn-sm">Proceder al pago</button>
+                <p>Subtotal: <strong>${{subtotal}}<select v-model="subtotal"></select></strong></p>
+                <button type="button" onclick="document.location='/pedido'" class="btn btn-primary btn-sm">Proceder al pago</button>
             </div>
         </div>
     </div>
@@ -44,7 +44,8 @@ export default {
                 precio: '',
                 cantidad: '',
                 imagen: ''
-            }]
+            }],
+            subtotal: null
         }
     },
     async created() {
@@ -55,12 +56,16 @@ export default {
             this.session = true
         }
         this.carrito = await API.getCarrito(localStorage.getItem('id'))
+        for (let c of this.carrito) {
+            this.subtotal += Number.parseInt(c.precio);
+        }
     }, methods: {
         async eliminarProducto(idProducto){
             const producto = {
                '_id': idProducto 
             }
             await API.deleteItemCarrito(localStorage.getItem('id'), producto)
+            this.$router.go()
         }
     }
 }

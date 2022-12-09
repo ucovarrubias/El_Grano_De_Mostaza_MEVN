@@ -26,7 +26,7 @@ router.post('/cliente/auth', API.authenticateCliente)
 
 router.patch('/cliente/carrito/:id', API.updateCarrito)
 router.get('/cliente/carrito/:id', API.getCarrito)
-router.patch('cliente/carrito/update/:id', API.deleteItemCarrito)
+router.patch('/cliente/carrito/update/:id', API.deleteItemCarrito)
 
 router.get('/producto/', API.fetchAllProductos)
 router.post('/producto/', upload, API.createProducto)

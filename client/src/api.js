@@ -49,8 +49,6 @@ export default class API {
     }
 
     static async deleteItemCarrito(id, carrito){
-        console.log(id)
-        console.log(carrito)
         const res = await axios.patch(urlClientes+'/carrito/update/'+id, carrito)
         return res.data
     }
