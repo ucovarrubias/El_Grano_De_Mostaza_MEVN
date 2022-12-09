@@ -5,6 +5,8 @@ import HomeView from '../views/HomeView.vue'
 import ProductosView from '../views/ProductosView.vue'
 import CarritoView from '../views/CarritoView.vue'
 import PedidoView from '../views/PedidoView.vue'
+import PagoView from '../views/PagoView.vue'
+import ConfirmacionView from '../views/ConfirmacionView.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +35,16 @@ const routes = [
     path: '/pedido',
     name: 'pedido',
     component: PedidoView
+  },
+  {
+    path: '/pago',
+    name: 'pago',
+    component: PagoView
+  },
+  {
+    path: '/confirmacion',
+    name: 'confirmacion',
+    component: ConfirmacionView
   }
 ]
 
