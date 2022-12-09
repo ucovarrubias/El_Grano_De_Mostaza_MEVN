@@ -379,8 +379,8 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="eliminarCliente" method="POST">
-                        <p>¿Est&aacute; seguro de realizar esta acci&oacute;n?</p>
+                    <form @submit.prevent="deleteFormUsuario">
+                        <p>¿Está seguro de realizar esta acción?</p>
                         <div class="mt-5">
                             <button type="submit" class="btn btn-danger btn-lg" data-bs-dismiss="modal">Confirmar</button>
                             <button type="button" class="btn btn-light btn-lg" data-bs-dismiss="modal">Cancelar</button>
@@ -475,6 +475,12 @@ export default {
         async updateFormTelefono(){
             const response = await API.updateCliente(localStorage.getItem('id'), {'telefono': this.cliente.telefono})
             console.log(response)
+        },
+        async deleteFormUsuario(){
+            const response = await API.deleteCliente(localStorage.getItem('id'))
+            localStorage.clear()
+            console.log(response)
+            this.$router.replace({name: 'index'})
         }   
     }
 }

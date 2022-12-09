@@ -14,10 +14,9 @@ app.use(express.static("uploads"))
 
 //Conexión a BD
 mongoose.connect(process.env.DB_URI, {
+
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
+    useUnifiedTopology: true
 }).then(() => console.log('Conexión a BD'))
 .catch((err) => console.log(err))
 

@@ -101,9 +101,11 @@ module.exports = class API {
     static async updateCarrito(req, res){
         const idCliente = req.params.id
         const carrito = req.body
-        console.log(req.body)
         try {
-            await Cliente.findByIdAndUpdate(idCliente, {$set: { carrito: carrito}})
+            console.log(carrito._id)
+            const result = await Cliente.findById(idCliente).find({ 'carrito.producto': { $in: { _id: carrito._id } } })
+            console.log(result)
+            await Cliente.findByIdAndUpdate(idCliente, {$push: { carrito: carrito}})
             res.status(200).json({message: 'Cliente actualizó su carrito'})
 
         } catch (err) {
@@ -115,11 +117,24 @@ module.exports = class API {
     static async getCarrito(req, res) {
         const idCliente = req.params.id
         try {
-            const clienteCarrito = await Cliente.findById(idCliente).populate(
-                'carrito.producto'
-            )
-            console.log("controller api: " + clienteCarrito)
+            const clienteCarrito = await Cliente.findById(idCliente)
+            .populate({
+                path: 'carrito.producto',
+                model: 'producto'
+            })
             res.status(200).json(clienteCarrito.carrito)
+        } catch (err) {
+            res.status(404).json({message: err.message})
+        }
+    }
+
+    //Delete item from carrito
+    static async deleteItemCarrito(req, res){
+        const idCliente = req.params.id
+        const productoId = req.body.id
+        console.log(productoId)
+        try {
+            await Cliente.findByIdAndUpdate(idCliente, {$pop: {path: 'carrito.producto', productoId}})
         } catch (err) {
             res.status(404).json({message: err.message})
         }

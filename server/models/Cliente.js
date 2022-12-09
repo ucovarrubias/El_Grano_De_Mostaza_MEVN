@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const schema = mongoose.Schema
 
 const clienteSchema = new schema({
-    _id: schema.Types.ObjectId,
     usuario: String,
     email: String,
     contrasenia: String,
@@ -17,8 +16,9 @@ const clienteSchema = new schema({
         estado: String,
         pais: String
     },
+    producto: {type: schema.Types.ObjectId, ref: 'producto'},
     carrito: [{
-        producto: {type: schema.Types.ObjectId, ref: 'producto'}, 
+        producto:{type: schema.Types.ObjectId, ref: 'producto'}, 
         precio: Number,
         cantidad: Number
     }]

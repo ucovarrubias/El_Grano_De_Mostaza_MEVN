@@ -16,7 +16,7 @@
                                     <button type="submit" class="mx-1 btn btn-light btn-sm">Actualizar</button>
                                 </div>
                             </form>
-                            <small><a class="text-danger" style="text-decoration: none;" href="agregarCarrito?tarea=eliminarCarrito&id=<%= c.getId()%>">Eliminar art&iacute;culo</a></small>
+                            <small><a class="text-danger" style="text-decoration: none;" @click="eliminarProducto(c._id)">Eliminar art&iacute;culo</a></small>
                         </div>
                     </div>
                 </div>
@@ -55,6 +55,13 @@ export default {
             this.session = true
         }
         this.carrito = await API.getCarrito(localStorage.getItem('id'))
+    }, methods: {
+        async eliminarProducto(idProducto){
+            const producto = {
+               '_id': idProducto 
+            }
+            await API.deleteItemCarrito(localStorage.getItem('id'), producto)
+        }
     }
 }
 </script>

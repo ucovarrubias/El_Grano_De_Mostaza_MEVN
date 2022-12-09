@@ -59,7 +59,6 @@ export default {
                 'cantidad': 1,
                 'precio': precio
             }
-            console.log(carrito)
             this.cliente = await API.updateCarrito(localStorage.getItem('id'), carrito)
             this.$router.push({name: 'carrito'})
         }
