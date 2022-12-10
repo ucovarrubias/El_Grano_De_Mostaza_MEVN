@@ -145,4 +145,15 @@ module.exports = class API {
             res.status(404).json({message: err.message})
         }
     }
+
+    //Delete el carrito
+    static async deleteCarrito(req, res){
+        const idCliente = req.params.id
+        try {
+            await Cliente.findByIdAndUpdate(idCliente, {$set: {carrito: []}})
+            res.status(200).json({message: 'Se eliminó el carrito'})
+        } catch (err) {
+            res.status(404).json({message: err.message})
+        }
+    }
 }

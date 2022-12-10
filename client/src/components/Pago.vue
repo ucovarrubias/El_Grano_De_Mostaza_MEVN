@@ -127,6 +127,7 @@ export default {
     },
     methods: {
         async botonPago(){
+            await API.deleteCarrito(localStorage.getItem('id'))
             this.$router.replace({name: 'confirmacion'})
         }
     }
